@@ -1,4 +1,4 @@
-in
+*.sqlite
 test/index.html
 index.html
 test2.txt
