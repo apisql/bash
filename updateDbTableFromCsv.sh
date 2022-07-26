@@ -1,13 +1,19 @@
 #!/bin/bash
 ## USAGE
-# ./updateDbTableFromCsv.sh "test.csv" "demo.sqlite" "Statements"
+# ./updateDbTableFromCsv.sh "test.csv" "Statements"
+# ./updateDbTableFromCsv.sh "test.csv" "Statements" "demo.sqlite"
+#
+DB_PATH_DEFAULT=apisql.db
 INPUT_PATH=$1
 if [ ! -t 0 ]; then
   IFS='' read -d '' -r INPUT_PATH
-  [ -z "$3" ] && DB_PATH=$1 && TABLE=$2
-else
+  TABLE=$1
   DB_PATH=$2
-  TABLE=$3
+  [ -z "$2" ] && DB_PATH=$DB_PATH_DEFAULT
+else
+  TABLE=$2
+  DB_PATH=$3
+  [ -z "$3" ] && DB_PATH=$DB_PATH_DEFAULT
 fi
 #
 [ -z $INPUT_PATH ] && echo "!!! First Param, Csv File" && exit
@@ -23,3 +29,4 @@ cat << EOF | sqlite3 $DB_PATH
 .mode csv
 .import tmpfile.csv $TABLE
 EOF
+rm tmpfile.csv
