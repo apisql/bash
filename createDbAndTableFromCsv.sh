@@ -20,7 +20,7 @@ fi
 [ ! -r $INPUT_PATH ] && echo "!!! NOT READABLE: $INPUT_PATH" && exit
 #
 [ -z $DB_PATH ] && echo "!!! Third Param, Sqlite path" && exit
-rm $DB_PATH
+[ -r $DB_PATH ] && rm $DB_PATH
 #
 [ -z $TABLE ] && echo "!!! Second Param, Table name" && exit
 #
